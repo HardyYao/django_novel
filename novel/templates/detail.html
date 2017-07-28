@@ -1,0 +1,161 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" /> -->
+    <title>{{ novelcopy.novelname }} - Python探索馆 - Slice</title>
+    <!-- Main Theme -->
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}" />
+
+    <!-- Font -->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_n5vylbuqe61or.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_s60wfkri6ndpwrk9.css">
+  </head>
+<body>
+
+
+<!--===== Full Screen BG =====-->
+<div class="full-pic"></div>
+
+
+
+<!--===== Begin Header =====-->
+<header class="header">
+  <div class="fixed-head" style="z-index: 100;position: fixed; width: 100%; background-color: #3e3d43; -webkit-transform: translateZ(0);">
+    <div class="wrap1000 head-wrap">
+
+      <div class="logo">
+        <a href="/">
+          Python学院图书馆
+        </a>
+      </div>
+
+      <!-- nav -->
+      <div class="nav">
+        <ul class="nav-list">
+          <li>
+            <a href="/"><span>首页</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 1 1 %}"><span>玄幻</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 2 1 %}"><span>武侠</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 3 1 %}"><span>历史</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 4 1 %}"><span>言情</span></a>
+          </li>
+        </ul>
+      </div><!-- ./nav -->
+
+      <div class="search">
+        <form action="{% url 'novel:search'%}" method="get" target="_blank">
+          <input name="kw" placeholder="搜索书名" class="search-inp" type="text" maxlength="10" />
+          <input id="search-submit-btn" type="submit" style="display: none;" />
+          <label for="search-submit-btn">
+            <i class="iconfont icon-search"></i>
+          </label>
+        </form>
+      </div>
+
+    </div><!-- /.wrap1000 -->
+  </div>
+</header>
+<!--===== header End =====-->
+
+
+
+<!--===== Begin Main =====-->
+<section class="main">
+  <div class="main-wrap wrap1000">
+    <div class="hot-section">
+
+
+      <div class="hot-content">
+
+        <div class="book-avatar">
+          <img src="{{ novelcopy.novelimg }}" alt="" />
+        </div>
+
+        <div class="book-detail">
+          <h1>
+            <em class="mr10">{{ novelcopy.novelname }}</em>
+            <span>
+              <a href="javascript: void(0);">{{ novelcopy.author }}</a>
+               著
+            </span>
+          </h1>
+
+          <p class="book-tag">
+            <span class="now-book"><i class="mr10 iconfont icon-dushi"></i>现代 / 都市</span>
+            <span class="through-book">穿越</span>
+          </p>
+          <p class="description">
+            {{ novelcopy.description|safe }}
+          </p>
+
+
+          <a class="now-read btn" href="{% url 'novel:chapter' 1 %}">立即阅读</a>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- catalog -->
+    <div class="catalog">
+      <h2>目录(<span>20</span>章)</h2>
+
+      <ul class="catalog-list">
+        {% for chaptercopy in chaptercopys %}
+        <li><a href="{% url 'novel:chapter' chaptercopy.chapterid %}">
+          {{ chaptercopy.title }}
+        </a></li>
+        {% endfor %}
+      </ul>
+    </div><!-- /.catalog -->
+  </div>
+</section>
+<!--===== Main End =====-->
+
+
+
+<!--===== Begin Footer =====-->
+<footer class="footer">
+  <div class="wrap1000 footer-wrap">
+    <div class="logo-footer">
+      <a href="index.html">
+        <img src="{% static 'img/head_logo.png' %}" alt="" width="55" height="50" />
+        <span class="footer-txt">潭州教育Python学院</span>
+      </a>
+      <span class="footer-font">
+        TAN ZHOU EDU PYTHON COLLEGE
+      </span>
+    </div>
+    <div class="copy-right">
+      <p>
+        本站小说均来源于互联网,仅供技术学习和交流使用,请尊重原创作者切勿用商业用途,请于下载后的24小时内删除。
+      </p>
+      <p class="">
+        Copyright © 2017 All Rights Reserved 湖南潭州教育网络科技有限公司PYTHON学院 
+      </p>
+    </div>
+  </div>
+</footer>
+<!--===== Footer End =====-->
+
+
+
+<!-- Main Plugin -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+
+</body>
+</html>               

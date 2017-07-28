@@ -1,0 +1,183 @@
+{% load staticfiles %}
+{% load i18n %}
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" /> -->
+    <title>Python探索馆 - Slice</title>
+    <!-- Main Theme -->
+    <link rel="stylesheet" href="{% static 'css/more.css' %}" />
+
+    <!-- Font -->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_n5vylbuqe61or.css" />
+  </head>
+<body>
+
+
+<!--===== Full Screen BG =====-->
+<div class="full-pic"></div>
+
+
+
+<!--===== Begin Header =====-->
+<header class="header">
+  <div class="fixed-head" style="position: fixed; width: 100%; background-color: #65b2f1; -webkit-transform: translateZ(0);">
+    <div class="wrap1000 head-wrap">
+
+      <div class="logo">
+        <a href="/">
+          Python学院图书馆
+        </a>
+      </div>
+
+      <!-- nav -->
+      <div class="nav">
+        <ul class="nav-list">
+          <li>
+            <a href="/"><span>首页</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 1 1 %}"><span>玄幻</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 2 1 %}"><span>武侠</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 3 1 %}"><span>历史</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 4 1 %}"><span>言情</span></a>
+          </li>
+        </ul>
+      </div><!-- ./nav -->
+
+      <div class="search">
+        <form action="{% url 'novel:search'%}" method="get" target="_blank">
+          <input name="kw" placeholder="搜索书名" class="search-inp" type="text" maxlength="10" />
+          <input id="search-submit-btn" type="submit" style="display: none;" />
+          <label for="search-submit-btn">
+            <i class="iconfont icon-search"></i>
+          </label>
+        </form>
+      </div>
+
+    </div><!-- /.wrap1000 -->
+  </div>
+</header>
+<!--===== header End =====-->
+
+
+
+<!--===== Begin Main =====-->
+<section class="main">
+  <div class="main-wrap wrap1000">
+    <div class="hot-section">
+
+      <!-- <div class="hot-shadow">
+        <div class="hot-title">玄幻</div>
+      </div> -->
+
+      <div class="figure"></div>
+
+      <div class="hot-content">
+
+        <!-- Xuanhuan -->
+        <h1 class="xunhuan-txt">{{ novelsort }}</h1>
+
+        {% for novel in novels %}
+
+        <div class="xuanhuan">
+          <div class="wrap890 xuanhuan-wrap">
+
+            <dl class="book-list">
+
+
+              <dd class="book">
+                <div class="book-border-bottom"></div>
+                <div class="book-wrap">
+                  <a class="cover" href="{% url 'novel:novel_content' novel.novelid %}"><img src="{{ novel.novelimg }}" alt="" width="102" height="136" /></a>
+                  <div class="book-presentation">
+                    <h2><a href="{% url 'novel:novel_content' novel.novelid %}">{{ novel.novelname }}</a></h2>
+                    <p class="book-info">
+                      <i></i>
+                      <span>{{ novel.sort|safe }}</span>
+                      <span class="info-txt">{{ novel.state }}</span>
+                      <span>314.14万字</span>
+                    </p>
+                    <p class="book-author">
+                      <a href="javascript: void(0);">作者:
+                        <span>{{ novel.author }}</span>
+                      </a>
+                    </p>
+                    <p class="desc" style="overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 5;">
+                      {{ novel.description|safe|truncatechars:100 }}
+                    </p>
+
+                  </div>
+                </div>
+              </dd>
+
+
+            </dl>
+            
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- pagin -->
+        <div class="pagin">
+          <ul class="page-list">
+              {% if novels.has_previous %}
+                  <li><a href="{% url 'novel:sort_list' noveltype novels.previous_page_number %}"><<</a></li>
+              {% endif %}
+
+              {% if novels.has_next %}
+                  <li><a href="{% url 'novel:sort_list' noveltype novels.next_page_number %}">>></a></li>
+              {% endif %}
+          </ul>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!--===== Main End =====-->
+
+
+
+<!--===== Begin Footer =====-->
+<footer class="footer">
+  <div class="wrap1000 footer-wrap">
+    <div class="logo-footer">
+      <a href="/">
+        <img src="{% static 'img/footer_logo.png' %}" alt="" width="55" height="50" />
+        <span class="footer-txt">潭州教育Python学院</span>
+      </a>
+      <span class="footer-font">
+        TAN ZHOU EDU PYTHON COLLEGE
+      </span>
+    </div>
+    <div class="copy-right">
+      <p>
+        本站小说均来源于互联网,仅供技术学习和交流使用,请尊重原创作者切勿用商业用途,请于下载后的24小时内删除。
+      </p>
+      <p class="">
+        Copyright © 2017 All Rights Reserved 湖南潭州教育网络科技有限公司PYTHON学院 
+      </p>
+    </div>
+  </div>
+</footer>
+<!--===== Footer End =====-->
+
+
+
+<!-- Main Plugin -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+
+</body>
+</html>               

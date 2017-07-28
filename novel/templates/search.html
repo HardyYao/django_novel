@@ -1,0 +1,212 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="Keywords" content="" />
+        <meta name="description" content="" />
+        <title>搜索</title>
+        <!-- Style -->
+        <link href="{% static 'css/search.css' %}" rel="stylesheet" />
+
+        <!-- Font -->
+        <link rel="stylesheet" href="http://at.alicdn.com/t/font_n5vylbuqe61or.css" />
+
+        <!-- Book Icon -->
+        <link rel="stylesheet" href="http://at.alicdn.com/t/font_s60wfkri6ndpwrk9.css">
+
+        <!-- Banner -->
+        <link rel="stylesheet" href="http://at.alicdn.com/t/font_j4y842l05y3w61or.css">
+    </head>
+<body>
+
+  <header class="header">
+    <div class="fixed-head" style="z-index: 100;width: 100%; background-color: #3e3d43; -webkit-transform: translateZ(0); height: 65px;">
+      <div class="wrap1000 head-wrap">
+
+        <div class="logo">
+          <a href="/">
+            Python学院图书馆
+          </a>
+        </div>
+
+        <!-- nav -->
+        <div class="nav">
+          <ul class="nav-list">
+            <li>
+              <a href="/"><span>首页</span></a>
+            </li>
+           <li>
+            <a href="{% url 'novel:sort_list' 1 1 %}"><span>玄幻</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 2 1 %}"><span>武侠</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 3 1 %}"><span>历史</span></a>
+          </li>
+          <li>
+            <a href="{% url 'novel:sort_list' 4 1 %}"><span>言情</span></a>
+          </li>
+          </ul>
+        </div><!-- ./nav -->
+
+        <div class="search">
+          <form action="{% url 'novel:search' %}" method="get" target="_blank">
+            <input name="kw" placeholder="搜索书名" class="search-inp we-on" type="text" maxlength="10">
+            <input id="search-submit-btn" type="submit" style="display: none;">
+            <label for="search-submit-btn">
+              <i class="iconfont icon-search icon-sear"></i>
+            </label>
+          </form>
+        </div>
+
+      </div><!-- /.wrap1000 -->
+    </div>
+  </header>
+
+
+  <section>
+    <div class="search-wrap">
+      <form id="search-form" action="{% url 'novel:search'%}" method="get">
+        <input name="kw" type="text" value="{{ novelname }}" /><span id="search-btn" class="btn search-btn">搜 索</span>
+      </form>
+    </div>
+    
+
+    <div class="wrap1000 clear">
+
+      <!-- RecommendRight -->
+      <div class="re-right">
+        <h2>随机强推</h2>
+
+        <!-- Random Recommend -->
+        <ul class="re-list">
+
+          {% for random_recommend in random_recommends %}
+          <li>
+            <a class="cover" href="{% url 'novel:novel_content' random_recommend.novelid %}">
+              <img src={{ random_recommend.novelimg }} alt="" width="72" height="96" />
+            </a>
+
+            <div class="rec-wrap">
+              <h3>
+                <a class="rec-title" href="{% url 'novel:novel_content' random_recommend.novelid %}">{{ random_recommend.novelname }}</a>
+              </h3>
+              <div class="rec-author">
+                <a href="javascript: void(0);">
+                  <i class="iconfont icon-icon-awsauthor"></i>
+                  {{ random_recommend.author }}
+                </a>
+              </div>
+              <p class="rec-desc">
+                {{ random_recommend.description|safe }}
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+
+        </ul><!-- /.Random Recommend -->
+      </div><!-- /.Recommend Right -->
+
+
+
+      <!-- BookContent left -->
+      <div class="book-left">
+        
+
+        <div class="result">
+
+          <div class="search-content">
+            <i class="iconfont icon-book2"></i>
+            <p>没有找到符合条件的书</p>
+
+          </div>
+
+          <h2>
+            猜你喜欢
+          </h2>
+
+        </div>
+        <!-- 
+            最多十页，然后分页
+         -->
+        <div class="about-result">
+          <ul class="result-list">
+
+            {% for searchnovel in searchnovels %}
+            <li>
+              <div class="about-cover">
+                <a href="javascript: void(0);">
+                  <img src={{ searchnovel.novelimg }} alt="" width="102" height="136" />
+                </a>
+              </div>
+              <div class="about-info">
+                <div class="about-title">
+                  <a href="{% url 'novel:novel_content' searchnovel.novelid %}">{{ searchnovel.novelname }}</a>
+                </div>
+                <div class="about-author">
+                  <i style="font-size: 14px;" class="iconfont icon-icon-awsauthor"></i>
+                  <a class="author-link" href="javascript: void(0);">{{ searchnovel.author }}</a>
+                  <a class="book-classify" href="javascript: void(0);">{{ searchnovel.sort }}</a>
+                  <span>{{ searchnovel.state }}</span>
+                </div>
+                <div class="about-desc">
+                  <p>
+                    {{ searchnovel.description|safe }}
+                  </p>
+                </div>
+
+                <div class="date">
+                  更新日期：
+                  <span>2015-05-01 14:01:14</span>
+                </div>
+
+                <a class="detail-btn btn" href="{% url 'novel:novel_content' searchnovel.novelid %}">书籍详情</a>
+              </div>
+            </li>
+            {% endfor %}
+
+          </ul>
+        </div>
+
+      </div><!-- BookContent Left -->
+
+
+    </div>
+  </section>
+
+
+
+  <!--===== Begin Footer =====-->
+  <footer class="footer">
+    <div class="wrap1000 footer-wrap">
+      <div class="logo-footer">
+        <a href="/">
+          <img src="{% static 'img/head_logo.png' %}" alt="" width="55" height="50" />
+          <span class="footer-txt">潭州教育Python学院</span>
+        </a>
+        <span class="footer-font">
+          TAN ZHOU EDU PYTHON COLLEGE
+        </span>
+      </div>
+      <div class="copy-right">
+        <p>
+          本站小说均来源于互联网,仅供技术学习和交流使用,请尊重原创作者切勿用商业用途,请于下载后的24小时内删除。
+        </p>
+        <p>
+          Copyright © 2017 All Rights Reserved 湖南潭州教育网络科技有限公司PYTHON学院 
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!--===== Footer End =====-->
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/search.js' %}"></script>
+
+</body>
+</html>

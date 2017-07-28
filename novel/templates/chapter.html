@@ -1,0 +1,110 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="Keywords" content="最新,最新章节,都市小说,阅读" />
+        <meta name="description" content="随身带个侏罗纪最新章节阅读，随身带个侏罗纪是一部都市小说,由木鱼和尚创作,起点提供首发更新。第四百六十一章 杀鸡儆猴 如何解释(2016.09.27)" />
+        <title>{{ chaptertitle.title }}_{{ thenovelname.novelname }}_Python学院_小说下载</title>
+        <link href="{% static 'css/chapter.css' %}" rel="stylesheet" />
+    </head>
+<body>
+
+    <!-- Full Screen -->
+    <div class="full-pic"></div>
+    <!-- sidebar -->
+    <div class="sidebar">
+        <span class="return iconfont">&#xe618;</span>
+
+        <!-- dire -->
+        <span id="lan-Top"  class="dir">
+            <span class="dir-wrap">
+                <i class="iconfont">&#xe60b;</i>
+                <p>目录</p>
+            </span>
+            <div class="dir-content" style="display: none;">
+                <h3>
+                    <i class="iconfont close">&#xe605;</i>
+                    <span class="content-txt">目录</span>
+                </h3>
+
+                <div class="title-list">
+
+                    <div class="title-wrap">
+                        <h2>
+                            <span>
+                                作品相关
+                                <i class="iconfont dir-icon icon-icon2"></i>
+                            </span>
+                        </h2>
+
+                        <ul class="dir-list">
+                            {% for chapter in chapters %}
+                            <li><a href="{% url 'novel:chapter' chapter.chapterid %}">
+                                {{ chapter.title }}
+                            </a></li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </span>
+    </div>
+
+    <!--===== Header Begin =====-->
+    <header class="header">
+        <div class="wrap990" style="width: auto; max-width: 990px;">
+            <div class="logo">
+                <a href="/">潭州Python书院</a>
+            </div>
+
+            <div class="right-search">
+                <form action="{% url 'novel:search' %}" target="_blank">
+                    <input name="kw" type="text" />
+                    <input id="search-submit" type="submit" value="" />
+                    <label class="label-tag" for="search-submit">
+                        <i class="iconfont">&#xe714;</i>
+                    </label>
+                </form>
+            </div>
+           
+        </div>
+    </header>
+    <!--===== End Header =====-->
+
+
+
+    <!--===== Main Begin =====-->
+    <section class="main">
+        <div class="wrap800 main-wrap">
+            <div class="content">
+                <h2></h2>
+                <h2>{{ chaptertitle.title }}</h2>
+                <div class="read-content j_readContent">
+                    <p>{{ chaptertitle.content|safe }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="chapter-controll wrap800">
+
+            <a href="{% url 'novel:chapter' lastchapter %}">上一章</a><a href="{% url 'novel:novel_content' thenovelid %}">目录</a><a href="{% url 'novel:chapter' nextchapter %}">下一章</a>
+
+        </div>
+    </section>
+
+    <!--===== End Main =====-->
+
+
+
+<!-- Main Plugin -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/chapter.js' %}"></script>
+
+</body>
+</html>
